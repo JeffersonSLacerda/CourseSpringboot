@@ -1,10 +1,15 @@
 package com.lacerdadev.course.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +21,10 @@ public class Category implements Serializable {
   private UUID id;
 
   private String name;
+
+  @JsonIgnore
+  @ManyToMany(mappedBy = "categories")
+  private Set<Product> products = new HashSet<>();
 
   public Category() {
   }
@@ -32,6 +41,10 @@ public class Category implements Serializable {
 
   public String getName() {
     return name;
+  }
+
+  public Set<Product> getProducts() {
+    return products;
   }
 
   public void setName(String name) {

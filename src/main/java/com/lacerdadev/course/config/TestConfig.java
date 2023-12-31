@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.lacerdadev.course.entities.Category;
 import com.lacerdadev.course.entities.Order;
+import com.lacerdadev.course.entities.Product;
 import com.lacerdadev.course.entities.User;
 import com.lacerdadev.course.entities.enums.OrderStatus;
 import com.lacerdadev.course.repositories.CategoryRepository;
 import com.lacerdadev.course.repositories.OrderRepository;
+import com.lacerdadev.course.repositories.ProductRepository;
 import com.lacerdadev.course.repositories.UserRepository;
 
 @Configuration
@@ -28,6 +30,9 @@ public class TestConfig implements CommandLineRunner {
 
   @Autowired
   private CategoryRepository categoryRepository;
+
+  @Autowired
+  private ProductRepository productRepository;
 
   @Override
   public void run(String... args) throws Exception {
@@ -48,5 +53,19 @@ public class TestConfig implements CommandLineRunner {
 
     categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
 
+    Product product1 = new Product("The Lord of the rings", "DESCRIPTION", 90.5, "");
+    Product product2 = new Product("Smart TV", "DESCRIPTION", 2104.5, "");
+    Product product3 = new Product("MacBook pro", "DESCRIPTION", 14045.0, "");
+    Product product4 = new Product("PC Gamer", "DESCRIPTION", 6360.0, "");
+    Product product5 = new Product("Rails for Dummies", "DESCRIPTION", 100.99, "");
+
+    product1.getCategories().add(category2);
+    product2.getCategories().add(category1);
+    product2.getCategories().add(category3);
+    product3.getCategories().add(category3);
+    product4.getCategories().add(category3);
+    product5.getCategories().add(category2);
+
+    productRepository.saveAll(Arrays.asList(product1, product2, product3, product4, product5));
   }
 }
